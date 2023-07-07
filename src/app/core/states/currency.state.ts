@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Currency } from '../models/currency.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { CurrencyService } from '../services/currency.service';
-import { ExchangeRates } from '../models/exchangeRate.model';
+import { ExchangeRates, RateSymbol } from '../models/exchangeRate.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,13 @@ export class CurrencyState {
   private readonly _currencyTo$ = new BehaviorSubject<Currency>({
     symbol: 'USD',
   });
+  private readonly _popularCurrenciesConversion$ = new BehaviorSubject<
+    {
+      key: string;
+      value: number;
+      text: string;
+    }[]
+  >([]);
 
   public amount$ = this._amount$.asObservable();
   public calculatedResult$ = this._calculatedResult$.asObservable();
@@ -27,6 +34,8 @@ export class CurrencyState {
   public exchangeRates$ = this._exchangeRates$.asObservable();
   public currencyFrom$ = this._currencyFrom$.asObservable();
   public currencyTo$ = this._currencyTo$.asObservable();
+  public popularCurrenciesConversion$ =
+    this._popularCurrenciesConversion$.asObservable();
 
   constructor(private readonly _svc: CurrencyService) {
     this._svc
@@ -74,7 +83,21 @@ export class CurrencyState {
           this._currencyTo$.value.symbol
         ];
       this._calculatedResult$.next(calculatedResult);
+      this.convertToPopularCurrencies();
     }
+  }
+
+  public convertToPopularCurrencies(): void {
+    const popularCurrenciesConversion = Object.entries(
+      this._exchangeRates$.value![this._currencyFrom$.value.symbol]
+    ).map((e) => ({
+      key: e[0],
+      value: this._amount$.value * e[1],
+      text: `${this._amount$.value} ${this._currencyFrom$.value.symbol} = ${(
+        this._amount$.value * e[1]
+      ).toFixed(2)} ${this._currencyFrom$.value.symbol}`,
+    }));
+    this._popularCurrenciesConversion$.next(popularCurrenciesConversion);
   }
 }
 

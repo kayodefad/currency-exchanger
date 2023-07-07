@@ -1,11 +1,13 @@
 <div class="converted-results">
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
-  <div class="item"></div>
+  <div
+    class="item"
+    *ngFor="let item of currencyFacade.popularCurrenciesConversion$ | async"
+  >
+    {{ item.text }}
+    <!-- 1 EUR = 0.97 USD -->
+  </div>
+  <div
+    class="item"
+    *ngIf="!(currencyFacade.popularCurrenciesConversion$ | async)!.length"
+  ></div>
 </div>

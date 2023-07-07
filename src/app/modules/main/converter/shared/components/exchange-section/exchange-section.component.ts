@@ -80,5 +80,6 @@ export class ExchangeSectionComponent implements OnInit {
 
   convert() {
     this.currencyFacade.calculateResult();
+    this.currencyFacade.convertToPopularCurrencies();
   }
 }

@@ -3,6 +3,7 @@ import { HomeComponent } from './home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ConvertedResultsComponent } from './components/converted-results/converted-results.component';
+import { CoreModule } from 'src/app/core/core.module';
 
 const ROUTES: Routes = [
   {
@@ -13,7 +14,7 @@ const ROUTES: Routes = [
 
 @NgModule({
   declarations: [HomeComponent, ConvertedResultsComponent],
-  imports: [RouterModule.forChild(ROUTES), SharedModule],
+  imports: [CoreModule, RouterModule.forChild(ROUTES), SharedModule],
   exports: [RouterModule],
 })
 export class HomeModule {}

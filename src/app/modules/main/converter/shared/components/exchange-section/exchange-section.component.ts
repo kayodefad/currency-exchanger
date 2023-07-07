@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
 import { CurrencyFacade } from 'src/app/core/facades/currency.facade';
 import { Currency } from 'src/app/core/models/currency.model';
 import { ExchangeRates } from 'src/app/core/models/exchangeRate.model';
@@ -10,14 +9,16 @@ import { ExchangeRates } from 'src/app/core/models/exchangeRate.model';
   styleUrls: ['./exchange-section.component.scss'],
 })
 export class ExchangeSectionComponent implements OnInit {
+  @Input() showDetailsButton?: boolean;
+  @Input() disableFromSelect: boolean = false;
   public amount!: number;
   public currencyFrom!: Currency;
   public currencyTo!: Currency;
   public convertedResult: string = '';
   public convertedResult2: string = '';
   public disableElements = false;
-  // public calculatedResult!: number;
   exchangeRates!: ExchangeRates | null;
+
   constructor(public currencyFacade: CurrencyFacade) {}
 
   ngOnInit(): void {
@@ -36,24 +37,8 @@ export class ExchangeSectionComponent implements OnInit {
         this.currencyTo.symbol
       }`;
     });
-
-    // this.getExchangeRates();
     this.setExchangeRates();
   }
-
-  // private getExchangeRates() {
-  //   // Get exchange rates
-  //   if (localStorage.getItem('currencyExchangeRates') !== null) {
-  //     const exchangeRates: ExchangeRates = JSON.parse(
-  //       localStorage.getItem('currencyExchangeRates')!
-  //     );
-  //     this.exchangeRates = exchangeRates;
-  //     console.log(exchangeRates);
-  //   } else {
-  //     //Stupid error
-  //     this.currencyFacade.getExchangeRates();
-  //   }
-  // }
 
   setExchangeRates() {
     this.currencyFacade.exchangeRates$.subscribe(

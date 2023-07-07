@@ -10,8 +10,8 @@ export const ROUTES: Routes = [
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'eur-usd',
+    path: 'details',
     loadChildren: () =>
-      import('./eur-usd/eur-usd.module').then((m) => m.EurUsdModule),
+      import('./details/details.module').then((m) => m.DetailsModule),
   },
 ];

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { EurUsdComponent } from './eur-usd.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
-import { ROUTES } from './eur-usd.routes';
+import { ROUTES } from './details.routes';
 import { HistoricalRatesChartComponent } from './components/historical-rates-chart/historical-rates-chart.component';
 import { SharedModule } from '../shared/shared.module';
+import { DetailsComponent } from './details.component';
 
 @NgModule({
-  declarations: [EurUsdComponent, HistoricalRatesChartComponent],
+  declarations: [DetailsComponent, HistoricalRatesChartComponent],
   imports: [CoreModule, RouterModule.forChild(ROUTES), SharedModule],
 })
-export class EurUsdModule {}
+export class DetailsModule {}

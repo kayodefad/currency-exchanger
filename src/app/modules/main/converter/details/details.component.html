@@ -1,0 +1,9 @@
+<app-sub-header
+  title="Title"
+  [calltoAction]="callToAction"
+  [currencyFrom]="(currencyFacade.currencyFrom$ | async)?.symbol"
+></app-sub-header>
+<div class="eur-usd">
+  <app-exchange-section [disableFromSelect]="true"></app-exchange-section>
+  <app-historical-rates-chart></app-historical-rates-chart>
+</div>

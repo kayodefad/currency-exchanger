@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class SubHeaderComponent {
   @Input() title!: string;
   @Input() calltoAction?: { text: string; link: string };
+  @Input() currencyFrom?: string;
 }

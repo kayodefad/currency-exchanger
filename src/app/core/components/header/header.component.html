@@ -3,7 +3,15 @@
     <img src="assets/images/logo.png" alt="logo" />
   </button>
   <div class="details">
-    <a [routerLink]="['/converter', 'eur-usd']">EUR-USD Details</a>
-    <a [routerLink]="['/eur-gbp']">EUR-GBP Details</a>
+    <a
+      [routerLink]="['/converter', 'details']"
+      [queryParams]="{ pair: 'eur-usd' }"
+      >EUR-USD Details</a
+    >
+    <a
+      [routerLink]="['/converter', 'details']"
+      [queryParams]="{ pair: 'eur-gbp' }"
+      >EUR-GBP Details</a
+    >
   </div>
 </header>

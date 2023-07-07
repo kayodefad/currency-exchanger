@@ -23,7 +23,7 @@
           (change)="selectCurrency($event, 'from')"
           id="from"
           name="from"
-          [disabled]="disableElements"
+          [disabled]="disableElements || disableFromSelect"
         >
           <option
             *ngFor="let currency of currencyFacade.currencies$ | async"
@@ -59,7 +59,13 @@
     </button>
     <div class="bottom">
       <input disabled type="text" name="" id="" [value]="convertedResult2" />
-      <button [disabled]="disableElements">More Details</button>
+      <button
+        [routerLink]="['/converter', 'details']"
+        *ngIf="showDetailsButton"
+        [disabled]="disableElements"
+      >
+        More Details
+      </button>
     </div>
   </div>
 </div>

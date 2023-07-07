@@ -1,4 +1,10 @@
 <div class="sub-heading">
-  <h1>Currency Exchanger</h1>
-  <button class="call-to-action">Back to Home</button>
+  <h1>{{ currencyFrom ? currencyFrom : "Currency Exchanger" }}</h1>
+  <button
+    *ngIf="calltoAction"
+    class="call-to-action"
+    [routerLink]="[calltoAction.link]"
+  >
+    Back to Home
+  </button>
 </div>

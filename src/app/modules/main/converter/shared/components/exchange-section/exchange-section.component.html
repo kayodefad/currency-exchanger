@@ -2,18 +2,35 @@
   <div class="left">
     <div class="amount">
       <label for="amount">Amount</label>
-      <input type="number" id="amount" value="25" />
+      <input
+        [(ngModel)]="amount"
+        (input)="setAmount($event)"
+        type="number"
+        id="amount"
+        min="0"
+      />
     </div>
     <div class="result">
-      <input type="text" name="" id="" value="1.00 EUR = XX.XX USD" />
+      <input disabled type="text" name="" id="" [value]="convertedResult" />
     </div>
   </div>
   <div class="right">
     <div class="top">
       <div class="from">
         <label for="from">From</label>
-        <select id="from" name="from">
-          <option>Option 1</option>
+        <select
+          [(ngModel)]="currencyFrom.symbol"
+          (change)="selectCurrency($event, 'from')"
+          id="from"
+          name="from"
+          [disabled]="disableElements"
+        >
+          <option
+            *ngFor="let currency of currencyFacade.currencies$ | async"
+            [value]="currency.symbol"
+          >
+            {{ currency.symbol }}
+          </option>
         </select>
       </div>
       <div class="arrow">
@@ -21,15 +38,31 @@
       </div>
       <div class="to">
         <label for="to">To</label>
-        <select id="to" name="from">
-          <option>Option 1</option>
+        <select
+          [(ngModel)]="currencyTo.symbol"
+          (change)="selectCurrency($event, 'to')"
+          id="to"
+          name="to"
+          [disabled]="disableElements"
+        >
+          <option
+            *ngFor="let currency of currencyFacade.currencies$ | async"
+            [value]="currency.symbol"
+          >
+            {{ currency.symbol }}
+          </option>
         </select>
       </div>
     </div>
-    <button class="convert">Convert</button>
+    <button [disabled]="disableElements" (click)="convert()" class="convert">
+      Convert
+    </button>
     <div class="bottom">
-      <input disabled type="text" name="" id="" value="XX.XX USD" />
-      <button>More Details</button>
+      <input disabled type="text" name="" id="" [value]="convertedResult2" />
+      <button [disabled]="disableElements">More Details</button>
     </div>
   </div>
 </div>
+{{ currencyFacade.amount$ | async }}
+{{ currencyFacade.currencyFrom$ | async | json }}
+{{ currencyFacade.currencyTo$ | async | json }}

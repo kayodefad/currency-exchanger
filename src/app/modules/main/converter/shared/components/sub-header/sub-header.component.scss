@@ -1,0 +1,18 @@
+@import "src/app/core/theming/main";
+
+.sub-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  h1 {
+  }
+  button {
+    background: $blue;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff;
+    padding: 1rem 3rem;
+  }
+}

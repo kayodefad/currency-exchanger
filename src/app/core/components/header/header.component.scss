@@ -1,0 +1,35 @@
+@import "src/app/core/theming/main";
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: $dark;
+  border: 1px solid #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .details {
+    display: flex;
+    gap: 1rem;
+    a {
+      border: 1px solid #fff;
+      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.2s ease-in;
+      &:hover {
+        background: #fff;
+        color: $dark;
+      }
+    }
+  }
+}

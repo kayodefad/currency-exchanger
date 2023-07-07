@@ -43,6 +43,7 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
     .amount {
       display: flex;
       flex-direction: column;
@@ -97,5 +98,11 @@ select {
         flex: 1;
       }
     }
+  }
+}
+
+@media (max-width: $sm) {
+  .exchange-section {
+    grid-template-columns: 1fr;
   }
 }

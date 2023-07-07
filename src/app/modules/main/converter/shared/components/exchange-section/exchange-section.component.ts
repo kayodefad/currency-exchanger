@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CurrencyFacade } from 'src/app/core/facades/currency.facade';
 import { Currency } from 'src/app/core/models/currency.model';
 import { ExchangeRates } from 'src/app/core/models/exchangeRate.model';
@@ -8,7 +9,7 @@ import { ExchangeRates } from 'src/app/core/models/exchangeRate.model';
   templateUrl: './exchange-section.component.html',
   styleUrls: ['./exchange-section.component.scss'],
 })
-export class ExchangeSectionComponent implements OnInit {
+export class ExchangeSectionComponent implements OnInit, OnDestroy {
   @Input() showDetailsButton?: boolean;
   @Input() disableFromSelect: boolean = false;
   public amount!: number;
@@ -18,26 +19,51 @@ export class ExchangeSectionComponent implements OnInit {
   public convertedResult2: string = '';
   public disableElements = false;
   exchangeRates!: ExchangeRates | null;
+  subscriptions: Subscription[] = [];
 
   constructor(public currencyFacade: CurrencyFacade) {}
 
   ngOnInit(): void {
-    this.currencyFacade.amount$.subscribe((amount) => (this.amount = amount));
-    this.currencyFacade.currencyFrom$.subscribe(
+    this.getAmount();
+    this.getCurrencyFrom();
+    this.getCurrencyTo();
+    this.getCalculatedResults();
+    this.setExchangeRates();
+  }
+
+  getAmount() {
+    const subscription = this.currencyFacade.amount$.subscribe(
+      (amount) => (this.amount = amount)
+    );
+    this.subscriptions.push(subscription);
+  }
+
+  getCurrencyFrom() {
+    const subscription = this.currencyFacade.currencyFrom$.subscribe(
       (currencyFrom) => (this.currencyFrom = currencyFrom)
     );
-    this.currencyFacade.currencyTo$.subscribe(
+    this.subscriptions.push(subscription);
+  }
+
+  getCurrencyTo() {
+    const subscription = this.currencyFacade.currencyTo$.subscribe(
       (currencyTo) => (this.currencyTo = currencyTo)
     );
-    this.currencyFacade.calculatedResult$.subscribe((calculatedResult) => {
-      this.convertedResult = `${this.amount.toFixed(2)} ${
-        this.currencyFrom.symbol
-      } = ${calculatedResult.toFixed(2)} ${this.currencyTo.symbol}`;
-      this.convertedResult2 = `${calculatedResult.toFixed(2)} ${
-        this.currencyTo.symbol
-      }`;
-    });
-    this.setExchangeRates();
+    this.subscriptions.push(subscription);
+  }
+
+  getCalculatedResults() {
+    const subscription = this.currencyFacade.calculatedResult$.subscribe(
+      (calculatedResult) => {
+        this.convertedResult = `${this.amount.toFixed(2)} ${
+          this.currencyFrom.symbol
+        } = ${calculatedResult.toFixed(2)} ${this.currencyTo.symbol}`;
+        this.convertedResult2 = `${calculatedResult.toFixed(2)} ${
+          this.currencyTo.symbol
+        }`;
+      }
+    );
+    this.subscriptions.push(subscription);
   }
 
   setExchangeRates() {
@@ -66,5 +92,13 @@ export class ExchangeSectionComponent implements OnInit {
   convert() {
     this.currencyFacade.calculateResult();
     this.currencyFacade.convertToPopularCurrencies();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      if (!subscription.closed) {
+        subscription.unsubscribe();
+      }
+    });
   }
 }

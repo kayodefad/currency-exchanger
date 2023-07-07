@@ -1,27 +1,15 @@
 # CurrencyConverter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6.
+## Directions on how to run the app
 
-## Development server
+Run `yarn` to install the dependencies
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Stories FF-1, FF-2 and FF-3 were implemented.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The API was very limited. I had to calculate the other exchange rates using the only result I could get using the free version. The API was only limited to get results for EUR
 
-## Build
+I also stored the result of the API call in local storage so that I don't the 100 calls that I am limited to
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The API_KEY is also hard-coded in the code. In an ideal application, it will be served with an environment variable

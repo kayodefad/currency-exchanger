@@ -4,9 +4,11 @@
 
 Run `yarn` to install the dependencies
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve --port 3000` or `yarn start` or `npm start` for a dev server. Navigate to `http://localhost:3000/`. The application will automatically reload if you change any of the source files.
 
 Stories FF-1, FF-2 and FF-3 were implemented.
+
+The Fizer API only works on port 3000 on localhost.
 
 The API was very limited. I had to calculate the other exchange rates using the only result I could get using the free version. The API was only limited to get results for EUR
 
